@@ -21,7 +21,6 @@ export default function Menu() {
     'Exercise 10 — Final Dashboard',
   ];
 
-  // Đường dẫn đến từng bài
   const routes: Href[] = [
     '/bai1',
     '/bai2',
@@ -40,13 +39,11 @@ export default function Menu() {
       style={styles.container}
       contentContainerStyle={styles.content}
     >
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>Campus Dashboard</Text>
         <Text style={styles.subtitle}>10 Exercises</Text>
       </View>
 
-      {/* Danh sách bài tập */}
       <View style={styles.exerciseList}>
         {exercises.map((exercise, index) => (
           <Pressable
@@ -57,19 +54,16 @@ export default function Menu() {
             ]}
             onPress={() => router.push(routes[index])}
           >
-            {/* Số bài */}
             <View style={styles.number}>
               <Text style={styles.numberText}>
                 {index + 1}
               </Text>
             </View>
 
-            {/* Tên bài */}
             <Text style={styles.buttonText}>
               {exercise}
             </Text>
 
-            {/* Mũi tên */}
             <Text style={styles.arrow}>›</Text>
           </Pressable>
         ))}
