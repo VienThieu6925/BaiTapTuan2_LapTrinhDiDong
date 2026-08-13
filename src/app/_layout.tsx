@@ -1,18 +1,37 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from 'expo-router';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <Stack>
+      <Stack.Screen
+        name="index"
+        options={{
+          title: 'Exercises',
+        }}
+      />
+
+      <Stack.Screen
+        name="bai1"
+        options={{
+          title: 'Exercise 1',
+        }}
+      />
+
+      <Stack.Screen
+        name="bai2"
+        options={{
+          title: 'Exercise 2',
+        }}
+      />
+
+      <Stack.Screen name="bai3" options={{ title: 'Exercise 3' }} />
+      <Stack.Screen name="bai4" options={{ title: 'Exercise 4' }} />
+      <Stack.Screen name="bai5" options={{ title: 'Exercise 5' }} />
+      <Stack.Screen name="bai6" options={{ title: 'Exercise 6' }} />
+      <Stack.Screen name="bai7" options={{ title: 'Exercise 7' }} />
+      <Stack.Screen name="bai8" options={{ title: 'Exercise 8' }} />
+      <Stack.Screen name="bai9" options={{ title: 'Exercise 9' }} />
+      <Stack.Screen name="bai10" options={{ title: 'Exercise 10' }} />
+    </Stack>
   );
 }

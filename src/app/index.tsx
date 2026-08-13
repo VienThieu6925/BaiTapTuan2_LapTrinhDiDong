@@ -1,98 +1,169 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
+import { router, Href } from 'expo-router';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function Menu() {
+  const exercises = [
+    'Exercise 1 — Component Selection',
+    'Exercise 2 — Text Stress Test',
+    'Exercise 3 — Layout',
+    'Exercise 4 — Navigation',
+    'Exercise 5 — Forms',
+    'Exercise 6 — Lists',
+    'Exercise 7 — Images',
+    'Exercise 8 — Responsive UI',
+    'Exercise 9 — Interaction',
+    'Exercise 10 — Final Dashboard',
+  ];
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+  // Đường dẫn đến từng bài
+  const routes: Href[] = [
+    '/bai1',
+    '/bai2',
+    '/bai3',
+    '/bai4',
+    '/bai5',
+    '/bai6',
+    '/bai7',
+    '/bai8',
+    '/bai9',
+    '/bai10',
+  ];
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+    >
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.title}>Campus Dashboard</Text>
+        <Text style={styles.subtitle}>10 Exercises</Text>
+      </View>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      {/* Danh sách bài tập */}
+      <View style={styles.exerciseList}>
+        {exercises.map((exercise, index) => (
+          <Pressable
+            key={index}
+            style={({ pressed }) => [
+              styles.button,
+              pressed && styles.buttonPressed,
+            ]}
+            onPress={() => router.push(routes[index])}
+          >
+            {/* Số bài */}
+            <View style={styles.number}>
+              <Text style={styles.numberText}>
+                {index + 1}
+              </Text>
+            </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+            {/* Tên bài */}
+            <Text style={styles.buttonText}>
+              {exercise}
+            </Text>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+            {/* Mũi tên */}
+            <Text style={styles.arrow}>›</Text>
+          </Pressable>
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: '#f1efe8',
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+
+  content: {
+    padding: 20,
+    paddingBottom: 30,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  /* Header */
+  header: {
+    marginTop: 30,
+    marginBottom: 25,
   },
+
   title: {
-    textAlign: 'center',
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#19192d',
   },
-  code: {
-    textTransform: 'uppercase',
+
+  subtitle: {
+    fontSize: 16,
+    color: '#777',
+    marginTop: 5,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  /* Exercise list */
+  exerciseList: {
+    gap: 12,
+  },
+
+  /* Button */
+  button: {
+    minHeight: 65,
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    borderWidth: 1,
+    borderColor: '#dddddd',
+
+    elevation: 2,
+  },
+
+  buttonPressed: {
+    opacity: 0.7,
+    transform: [{ scale: 0.98 }],
+  },
+
+  /* Number */
+  number: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+
+    backgroundColor: '#174ed8',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    marginRight: 15,
+  },
+
+  numberText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+  /* Exercise name */
+  buttonText: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333333',
+  },
+
+  /* Arrow */
+  arrow: {
+    fontSize: 28,
+    color: '#888888',
+    marginLeft: 10,
   },
 });
